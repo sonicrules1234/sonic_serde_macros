@@ -19,7 +19,12 @@ pub enum SonicSerdeObjectError {
     obj_types.insert("U8".to_string(), "u8".to_string());
     obj_types.insert("Bool".to_string(), "bool".to_string());
     obj_types.insert("SystemTime".to_string(), "SystemTime".to_string());
-    obj_types.insert("VecU8".to_string(), "Vec<u8>".to_string());
+    obj_types.insert("U32".to_string(), "u32".to_string());
+    obj_types.insert("U64".to_string(), "u64".to_string());
+    obj_types.insert("I8".to_string(), "i8".to_string());
+    obj_types.insert("I32".to_string(), "i32".to_string());
+    obj_types.insert("I64".to_string(), "i64".to_string());
+    
     code.push_str("#[derive(Debug, Hash, PartialOrd, Ord, Serialize, Eq, PartialEq, Deserialize, Clone)]\npub enum SonicSerdeObject {\n");
     let obj_types_vec: Vec<String> = obj_types.keys().into_iter().map(|x| x.to_string()).collect();
     for obj_type in obj_types_vec.clone() {
