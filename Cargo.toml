@@ -2,7 +2,7 @@
 name = "sonic_serde_macros"
 version = "0.1.0"
 edition = "2021"
-description = ""
+description = "Macros used in sonic_serde_object"
 license-file = "LICENSE"
 repository = "https://github.com/sonicrules1234/sonic_serde_macros"
 readme = "README.md"
