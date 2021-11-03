@@ -1,6 +1,6 @@
 [package]
 name = "sonic_serde_macros"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Macros used in sonic_serde_object"
 license-file = "LICENSE"
