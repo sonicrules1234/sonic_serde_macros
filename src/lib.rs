@@ -16,15 +16,23 @@ pub enum SonicSerdeObjectError {
     obj_types.insert("String".to_string(), "String".to_string());
     obj_types.insert("Vec".to_string(), "Vec<SonicSerdeObject>".to_string());
     obj_types.insert("Map".to_string(), "BTreeMap<SonicSerdeObject, SonicSerdeObject>".to_string());
-    obj_types.insert("U8".to_string(), "u8".to_string());
     obj_types.insert("Bool".to_string(), "bool".to_string());
     obj_types.insert("SystemTime".to_string(), "SystemTime".to_string());
+    obj_types.insert("U8".to_string(), "u8".to_string());
+    obj_types.insert("U16".to_string(), "u16".to_string());
     obj_types.insert("U32".to_string(), "u32".to_string());
     obj_types.insert("U64".to_string(), "u64".to_string());
+    obj_types.insert("U128".to_string(), "u128".to_string());
     obj_types.insert("I8".to_string(), "i8".to_string());
+    obj_types.insert("I16".to_string(), "i16".to_string());
     obj_types.insert("I32".to_string(), "i32".to_string());
     obj_types.insert("I64".to_string(), "i64".to_string());
+    obj_types.insert("I128".to_string(), "i128".to_string());
     obj_types.insert("VecU8".to_string(), "Vec<u8>".to_string());
+    obj_types.insert("USize".to_string(), "usize".to_string());
+    //obj_types.insert("F32".to_string(), "f32".to_string());
+    //obj_types.insert("F64".to_string(), "f64".to_string());
+    
     code.push_str("#[derive(Debug, Hash, PartialOrd, Ord, Serialize, Eq, PartialEq, Deserialize, Clone)]\npub enum SonicSerdeObject {\n");
     let obj_types_vec: Vec<String> = obj_types.keys().into_iter().map(|x| x.to_string()).collect();
     for obj_type in obj_types_vec.clone() {
@@ -150,9 +158,9 @@ impl<K, V> From<HashMap<K, V>> for SonicSerdeObject where SonicSerdeObject: std:
     }
 }
 "#);
-    let mut vecless_object_types_vec = obj_types_vec.clone();
-    vecless_object_types_vec.retain(|x| !(x.to_lowercase().starts_with("vec") || x.as_str() == "SystemTime"));
-    for obj_type1 in vecless_object_types_vec.clone() {
+    let mut included_object_types_vec = obj_types_vec.clone();
+    included_object_types_vec.retain(|x| !(x.to_lowercase().starts_with("vec")|| x.as_str() == "Map"));
+    for obj_type1 in included_object_types_vec.clone() {
         let obj_type = obj_types.get(&obj_type1).unwrap();
         code.push_str(format!("impl From<{}> for SonicSerdeObject ", obj_type.clone()).as_str());
         code.push_str("{\n    fn from(val: ");
@@ -161,7 +169,8 @@ impl<K, V> From<HashMap<K, V>> for SonicSerdeObject where SonicSerdeObject: std:
         code.push_str(&obj_type1);
         code.push_str("(val)\n    }\n}\n");
     }
-    for obj_type1 in vecless_object_types_vec.clone() {
+    included_object_types_vec.retain(|x| !(x.as_str() == "SystemTime" || x.as_str().to_lowercase() == "usize"));
+    for obj_type1 in included_object_types_vec.clone() {
         let obj_type = obj_types.get(&obj_type1).unwrap();
         code.push_str(format!("impl From<&{}> for SonicSerdeObject ", obj_type.clone()).as_str());
         code.push_str("{\n    fn from(val: &");
