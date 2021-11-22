@@ -30,6 +30,7 @@ pub enum SonicSerdeObjectError {
     obj_types.insert("I128".to_string(), "i128".to_string());
     obj_types.insert("VecU8".to_string(), "Vec<u8>".to_string());
     obj_types.insert("USize".to_string(), "usize".to_string());
+    obj_types.insert("BoxOption".to_string(), "Box<Option<SonicSerdeObject>>".to_string());
     //obj_types.insert("F32".to_string(), "f32".to_string());
     //obj_types.insert("F64".to_string(), "f64".to_string());
     
