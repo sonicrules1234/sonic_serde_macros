@@ -1,6 +1,6 @@
 [package]
 name = "sonic_serde_macros"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 description = "Macros used in sonic_serde_object"
 license-file = "LICENSE"
@@ -13,4 +13,7 @@ homepage = "https://github.com/sonicrules1234/sonic_serde_macros"
 [lib]
 proc-macro = true
 
+[features]
+
 [dependencies]
+ordered-float = { version = "2.8.0", features = ["serde"] }
